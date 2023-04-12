@@ -38,4 +38,18 @@ describe('getUserByUsername', () => {
     expect(actual).excludingEvery('_id').to.deep.equal(expected);
     expect(finalDBState).excludingEvery('_id').to.deep.equal(fakeData);
   });
+
+  it('returns null when the user is not found', async () => {
+    await setDatabaseData('users', [
+      {
+        id: '99',
+        username: 'XYZ',
+        email: 'xyz@gmail.com',
+      },
+    ]);
+
+    const actual = await getUserByUsername('def');
+
+    expect(actual).to.be.null;
+  });
 });
